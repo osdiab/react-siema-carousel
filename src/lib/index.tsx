@@ -1,8 +1,6 @@
 import * as React from "react";
 import SiemaLib, { SiemaOptions } from "siema";
 
-type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
 export type SiemaProps = Omit<SiemaOptions, "selector">;
 export enum SiemaErrorKind {
   SIEMA_INSTANCE_MISSING = "SIEMA_INSTANCE_MISSING"
