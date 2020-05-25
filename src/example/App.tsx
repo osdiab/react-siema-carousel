@@ -24,8 +24,8 @@ export function App() {
   return (
     <div style={{ width: "300px" }}>
       <Siema getSiemaInstance={getSiemaInstance}>
-        <img src={pinkImage} style={{ width: "100%" }} />
-        <img src={yellowImage} style={{ width: "100%" }} />
+        <img alt="pink slide" src={pinkImage} style={{ width: "100%" }} />
+        <img alt="yellow slide" src={yellowImage} style={{ width: "100%" }} />
       </Siema>
       <button onClick={triggerPrev}>Prev</button>
       <button onClick={triggerNext}>Next</button>
