@@ -34,7 +34,7 @@ export function Siema({
     if (elem && !siemaInstance) {
       setSiemaInstance(new SiemaLib({ ...siemaOptions, selector: elem }));
     }
-  }, [])
+  }, [siemaInstance, siemaOptions])
 
   return <div ref={ref}>{children}</div>
 };
