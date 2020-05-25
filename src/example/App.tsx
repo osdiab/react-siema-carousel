@@ -1,48 +1,34 @@
-import * as React from "react";
-import { Siema } from "src/lib";
+import React, { useState, useCallback } from "react";
+import { Siema } from "../lib";
+import SiemaLib from "siema";
 
-import pinkImage from "src/example/assets/siema--pink.svg";
-import yellowImage from "src/example/assets/siema--yellow.svg";
+import pinkImage from "./assets/siema--pink.svg";
+import yellowImage from "./assets/siema--yellow.svg";
 
-export class App extends React.Component {
-  private siemaRef?: Siema | null;
-  public render() {
-    return (
-      <div style={{ width: "300px" }}>
-        <Siema ref={this.setRef}>
-          <img src={pinkImage} style={{ width: "100%" }} />
-          <img src={yellowImage} style={{ width: "100%" }} />
-        </Siema>
-        <button onClick={this.triggerPrev}>Prev</button>
-        <button onClick={this.triggerNext}>Next</button>
-      </div>
-    );
-  }
+export function App() {
+  const [siemaInstance, setSiemaInstance] = useState<SiemaLib>();
+  const getSiemaInstance = useCallback((retrievedSiemaInstance: SiemaLib) => {
+    setSiemaInstance(retrievedSiemaInstance);
+  }, []);
 
-  private setRef = (elem: Siema | null): void => {
-    this.siemaRef = elem;
-  };
-
-  private triggerPrev = (): void => {
-    if (!this.siemaRef) {
-      this.logSiemaMissing();
-      return;
+  const triggerPrev = useCallback(() => {
+    if (siemaInstance) {
+      siemaInstance.prev();
     }
-    this.siemaRef.prev();
-  };
-
-  private triggerNext = (): void => {
-    if (!this.siemaRef) {
-      this.logSiemaMissing();
-      return;
+  }, [siemaInstance]);
+  const triggerNext = useCallback(() => {
+    if (siemaInstance) {
+      siemaInstance.next();
     }
-    this.siemaRef.next();
-  };
-
-  private logSiemaMissing(): void {
-    const message =
-      "Siema instance is not available. It may not have been instantiated yet.";
-    // tslint:disable-next-line
-    console.error(message);
-  }
+  }, [siemaInstance]);
+  return (
+    <div style={{ width: "300px" }}>
+      <Siema getSiemaInstance={getSiemaInstance}>
+        <img src={pinkImage} style={{ width: "100%" }} />
+        <img src={yellowImage} style={{ width: "100%" }} />
+      </Siema>
+      <button onClick={triggerPrev}>Prev</button>
+      <button onClick={triggerNext}>Next</button>
+    </div>
+  );
 }
